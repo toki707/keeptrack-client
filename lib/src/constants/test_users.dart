@@ -9,6 +9,7 @@ List<User> testUsers = [
   User(
     id: "1",
     name: "Toki707",
+    at: "jordan",
     performances: [
       Performance(
         circuit: Circuit(

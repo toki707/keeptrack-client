@@ -5,6 +5,7 @@ import 'objectif.dart';
 class User {
   final String? id;
   final String? name;
+  final String? at;
   final String? banner;
   final String? pfp;
   final List<Performance> performances;
@@ -13,6 +14,7 @@ class User {
   User({
     required this.id,
     required this.name,
+    required this.at,
     required this.performances,
     this.banner,
     this.pfp,
@@ -31,6 +33,7 @@ class User {
       id: id ?? this.id,
       name: name ?? this.name,
       banner: banner ?? this.banner,
+      at: at ?? at,
       pfp: pfp ?? this.pfp,
       performances: performances ?? this.performances,
       objectifs: objectifs ?? this.objectifs,
@@ -59,6 +62,13 @@ class User {
       );
     }
 
+    final at = json['at'];
+    if (at == null || at is! String) {
+      throw FormatException(
+        "Le Json est invalide : at doit être de type String dans $json",
+      );
+    }
+
     final pfp = json['pfp'];
     if (pfp == null || pfp is! String) {
       throw FormatException(
@@ -79,6 +89,7 @@ class User {
       id: id as String?,
       name: name as String?,
       banner: banner as String?,
+      at: at as String?,
       pfp: pfp as String?,
       performances: performances
           .cast<Map<String, dynamic>>()
@@ -92,4 +103,18 @@ class User {
           : <Objectif>[],
     );
   }
+
+  double get nbreHeursJouees {
+  int totalMs = 0;
+
+  for (final performance in performances) {
+    for (final voiturePerf in performance.voitures) {
+      for (final tour in voiturePerf.temps) {
+        totalMs += voiturePerf.tempsEnMs(tour);
+      }
+    }
+  }
+
+  return totalMs / 3600000;
+}
 }
