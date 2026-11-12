@@ -3,7 +3,6 @@ import 'package:keeptrack/src/common_widget/styled_text.dart';
 import 'package:keeptrack/src/constants/app_sizes.dart';
 import 'package:keeptrack/theme/theme.dart';
 
-
 class InfoItem extends StatelessWidget {
   const InfoItem({super.key, required this.label, required this.value});
 
@@ -15,8 +14,8 @@ class InfoItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        StyledText(label, fontSize: Sizes.p12, color: AppColors.textLabel),
-        StyledText(value, fontSize: Sizes.p16),
+        StyledText(label, fontSize: Sizes.p8, color: AppColors.textLabel),
+        StyledText(value, fontSize: Sizes.p12),
       ],
     );
   }

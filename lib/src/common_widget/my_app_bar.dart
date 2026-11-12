@@ -26,27 +26,23 @@ class MyAppBar extends StatelessWidget {
                     children: [
                       IconButton(
                         color: AppColors.textColor,
-
                         onPressed: () => Navigator.of(context).maybePop(),
                         icon: const Icon(Icons.arrow_back),
                       ),
-
                       const Expanded(child: SizedBox(width: 0)),
-
                       Image.asset(
                         "assets/images/keeptrack_icon.png",
-                        width: Sizes.p48,
+                        width: Sizes.p36,
                       ),
                     ],
                   )
                 else
                   Image.asset(
                     "assets/images/KeepTrack_logo.png",
-                    width: Sizes.p232,
+                    width: Sizes.p180,
                   ),
-
                 const SizedBox(
-                  width: Sizes.p148,
+                  width: Sizes.p120,
                   child: Divider(color: AppColors.dividerColor, thickness: 2),
                 ),
               ],

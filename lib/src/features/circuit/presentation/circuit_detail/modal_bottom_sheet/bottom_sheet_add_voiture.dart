@@ -136,7 +136,7 @@ class _BottomSheetAddCarState extends ConsumerState<BottomSheetAddVoiture> {
                     Row(
                       mainAxisAlignment: .center,
                       children: [
-                        StyledText("Ajouter un Temp", fontSize: Sizes.p24),
+                        StyledText("Ajouter un Temp", fontSize: Sizes.p16),
                       ],
                     ),
                     SizedBox(
@@ -146,7 +146,7 @@ class _BottomSheetAddCarState extends ConsumerState<BottomSheetAddVoiture> {
                         color: AppColors.dividerColor,
                       ),
                     ),
-                    gapH48,
+                    gapH24,
                     StyledDropdown(
                       label: "marque",
                       values: brands,
@@ -158,7 +158,7 @@ class _BottomSheetAddCarState extends ConsumerState<BottomSheetAddVoiture> {
                         });
                       },
                     ),
-                    gapH20,
+                    gapH16,
                     StyledDropdown(
                       key: ValueKey(selectedBrand),
                       label: "voiture",
@@ -168,10 +168,10 @@ class _BottomSheetAddCarState extends ConsumerState<BottomSheetAddVoiture> {
                         setState(() => selectedVoiture = value);
                       },
                     ),
-                    gapH32,
+                    gapH20,
                     Row(
                       children: [
-                        StyledText("Temps", fontSize: Sizes.p20),
+                        StyledText("Temps", fontSize: Sizes.p16),
                         Expanded(child: SizedBox(width: 0)),
                         IconButton(
                           onPressed: _ajouterTemps,

@@ -35,8 +35,8 @@ class LastTrackDriven extends ConsumerWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(Sizes.p16),
           child: Container(
-            height: Sizes.p148,
-            width: Sizes.p500,
+            height: Sizes.p120,
+            width: Sizes.p400,
             decoration: BoxDecoration(
               color: AppColors.trackCardColor,
               border: Border.all(color: AppColors.trackCardBorder, width: 2),
@@ -67,26 +67,30 @@ class LastTrackDriven extends ConsumerWidget {
                   children: [
                     gapW12,
                     Column(
+                      mainAxisAlignment: .center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          width: Sizes.p32,
-                          child: FlagAvatar(circuit.location),
+                          width: Sizes.p24,
+                          child: FlagAvatar(circuit.location, radius: Sizes.p12),
                         ),
-                        Image.asset(circuit.outline!, height: Sizes.p96),
+                        Image.asset(circuit.outline!, height: Sizes.p72),
                       ],
                     ),
-                    gapW28,
+                    gapW16,
                     Column(
                       mainAxisAlignment: .center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        StyledText(circuit.name!),
                         SizedBox(
-                          width: Sizes.p120,
+                          width: Sizes.p148,
+                          child: StyledText(circuit.name!, maxLines: 2),
+                        ),
+                        SizedBox(
+                          width: Sizes.p148,
                           child: StyledText(
                             "${circuit.country}, ${circuit.city}",
-                            fontSize: Sizes.p12,
+                            fontSize: Sizes.p8,
                             color: AppColors.textMuted,
                           ),
                         ),

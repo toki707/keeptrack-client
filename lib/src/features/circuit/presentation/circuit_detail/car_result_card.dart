@@ -15,36 +15,38 @@ class CarResultCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: Sizes.p148,
-            height: Sizes.p100,
+            width: Sizes.p96,
+            height: Sizes.p72,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(voiturePerformance.voiture.preview!),
+                fit: BoxFit.cover,
               ),
-              borderRadius: BorderRadius.all(Radius.circular(Sizes.p24)),
+              borderRadius: BorderRadius.all(Radius.circular(Sizes.p12)),
             ),
           ),
-
-          gapW16,
-
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              StyledText(voiturePerformance.voiture.name!, fontSize: Sizes.p20),
-
-              gapH12,
-
-              StyledText(
-                "${voiturePerformance.temps.length} Tours",
-                fontSize: Sizes.p12,
-              ),
-
-              gapH12,
-              StyledText(
-                "Meilleur tour : ${voiturePerformance.meilleurTemps}",
-                fontSize: Sizes.p12,
-              ),
-            ],
+          gapW12,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                StyledText(
+                  voiturePerformance.voiture.name!,
+                  fontSize: Sizes.p12,
+                  maxLines: 1,
+                ),
+                gapH8,
+                StyledText(
+                  "${voiturePerformance.temps.length} Tours",
+                  fontSize: Sizes.p12,
+                ),
+                gapH8,
+                StyledText(
+                  "Meilleur tour : ${voiturePerformance.meilleurTemps}",
+                  fontSize: Sizes.p12,
+                ),
+              ],
+            ),
           ),
         ],
       ),

@@ -65,7 +65,7 @@ class CircuitDetailScreen extends ConsumerWidget {
                           children: [
                             SizedBox(
                               width: double.infinity,
-                              height: Sizes.p400,
+                              height: Sizes.p232,
                               child: ShaderMask(
                                 shaderCallback: (Rect bounds) {
                                   return LinearGradient(
@@ -102,7 +102,7 @@ class CircuitDetailScreen extends ConsumerWidget {
                                   ),
                                   child: MyAppBar(circuit: circuit),
                                 ),
-                                gapH32,
+                                gapH12,
                                 TrackPres(circuit),
                               ],
                             ),
@@ -116,7 +116,7 @@ class CircuitDetailScreen extends ConsumerWidget {
                             crossAxisAlignment: .start,
                             children: [
                               CircuitCaracteristiques(circuit),
-                              gapH40,
+                              gapH20,
                               SectionTitle(
                                 "Temps realises :",
                                 trailing: IconButton.outlined(

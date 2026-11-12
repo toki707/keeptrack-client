@@ -44,20 +44,17 @@ class _CircuitCaracteristiquesState extends State<CircuitCaracteristiques> {
         ),
         children: [
           Image.asset(circuit.outline!),
-
           gapH12,
           Divider(thickness: 1, color: AppColors.dividerGrey),
           _infoRow(
             InfoItem(label: "Date de creation", value: "${circuit.yearCreation!}"),
             InfoItem(label: "Nombre de boxes", value: "${circuit.pitboxes}"),
           ),
-
           Divider(thickness: 1, color: AppColors.dividerGrey),
           _infoRow(
             InfoItem(label: "Longueur", value: "${circuit.lengthKm}"),
             InfoItem(label: "Sens", value: "${circuit.run}"),
           ),
-
           Divider(thickness: 1, color: AppColors.dividerGrey),
           _infoRow(
             InfoItem(
@@ -74,10 +71,9 @@ class _CircuitCaracteristiquesState extends State<CircuitCaracteristiques> {
     );
   }
 
-  /// Une ligne contenant deux informations côte à côte.
   Widget _infoRow(InfoItem left, InfoItem right) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Sizes.p28),
+      padding: const EdgeInsets.symmetric(horizontal: Sizes.p8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

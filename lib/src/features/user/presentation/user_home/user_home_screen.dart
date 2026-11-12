@@ -32,15 +32,17 @@ class UserHomeScreen extends ConsumerWidget {
       child: Scaffold(
         body: AppBackground(
           child: Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: Sizes.p12,
-              horizontal: Sizes.p16,
+            padding: EdgeInsets.only(
+              left: Sizes.p16,
+              right: Sizes.p16,
+              top: Sizes.p32,
+              bottom: Sizes.p12
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 MyAppBar(),
-                gapH20,
+                gapH12,
                 Container(
                   width: size.width * 0.9,
                   decoration: BoxDecoration(
@@ -67,7 +69,7 @@ class UserHomeScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                gapH32,
+                gapH16,
                 Expanded(
                   child: usersListValue.when(
                     loading: () =>
@@ -87,7 +89,7 @@ class UserHomeScreen extends ConsumerWidget {
                         children: [
                           HomeScreen(currentUser),
                           ListCircuitsScreen(),
-                          ProfileScreen(),
+                          ProfileScreen(currentUser),
                         ],
                       );
                     },
@@ -114,7 +116,7 @@ class HomeScreen extends StatelessWidget {
         SectionTitle("Objectifs en cours :"),
         gapH12,
         ObjectifsCarousel(user.objectifs, user.performances),
-        gapH64,
+        gapH24,
         LastResult(user),
         gapH8,
         StyledCard(

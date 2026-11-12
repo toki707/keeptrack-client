@@ -17,30 +17,24 @@ class TrackPres extends StatelessWidget {
       padding: const EdgeInsets.all(Sizes.p12),
       child: Column(
         crossAxisAlignment: .start,
-
         children: [
           Row(
             crossAxisAlignment: .center,
             children: [
               FlagAvatar(circuit.location),
               gapW8,
-
               SizedBox(
-                width: size.width * 0.8,
-                child: StyledText(circuit.name!, fontSize: Sizes.p48),
+                width: size.width * 0.7,
+                child: StyledText(circuit.name!, fontSize: Sizes.p24),
               ),
             ],
           ),
-
           gapH4,
-
-          StyledText(circuit.description!, fontSize: Sizes.p32),
-
-          gapH40,
-
+          StyledText(circuit.description!, fontSize: Sizes.p16),
+          gapH16,
           StyledText(
             "${circuit.country}, ${circuit.city}",
-            fontSize: Sizes.p20,
+            fontSize: Sizes.p12,
             color: AppColors.textLight,
           ),
         ],

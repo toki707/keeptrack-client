@@ -24,10 +24,10 @@ class LapTimesChart extends StatelessWidget {
 
     return SideTitleWidget(
       meta: meta,
-      space: Sizes.p4,
+      space: Sizes.p2,
       child: StyledText(
         "T${value.toInt() + 1}",
-        fontSize: Sizes.p12,
+        fontSize: Sizes.p8,
         color: estMeilleur ? AppColors.textBestLap : AppColors.textMuted,
       ),
     );
@@ -42,7 +42,7 @@ class LapTimesChart extends StatelessWidget {
       meta: meta,
       child: StyledText(
         "$minutes:$reste",
-        fontSize: Sizes.p12,
+        fontSize: Sizes.p8,
         color: AppColors.textMuted,
       ),
     );
