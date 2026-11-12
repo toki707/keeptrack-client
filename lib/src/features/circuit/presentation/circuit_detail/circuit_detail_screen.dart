@@ -55,9 +55,11 @@ class CircuitDetailScreen extends ConsumerWidget {
                 .expand((performance) => performance.voitures)
                 .toList();
 
+
             return Scaffold(
               body: AppBackground(
                 child: ListView(
+                  padding: EdgeInsets.zero,
                   children: [
                     Column(
                       children: [
@@ -65,7 +67,7 @@ class CircuitDetailScreen extends ConsumerWidget {
                           children: [
                             SizedBox(
                               width: double.infinity,
-                              height: Sizes.p232,
+                              height: Sizes.p232 ,
                               child: ShaderMask(
                                 shaderCallback: (Rect bounds) {
                                   return LinearGradient(
@@ -96,9 +98,11 @@ class CircuitDetailScreen extends ConsumerWidget {
                                       ],
                                     ),
                                   ),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: Sizes.p16,
-                                    vertical: Sizes.p12,
+                                  padding: EdgeInsets.only(
+                                    left: Sizes.p16,
+                                    right: Sizes.p16,
+                                    top:  Sizes.p24,
+                                    bottom: Sizes.p12,
                                   ),
                                   child: MyAppBar(circuit: circuit),
                                 ),
