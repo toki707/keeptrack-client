@@ -44,7 +44,7 @@ class LastResult extends StatelessWidget {
                     children: [
                       StyledText(
                         lastPerformance.circuit.name!,
-                        fontSize: Sizes.p20,
+                        fontSize: Sizes.p16,
                       ),
                       StyledText(
                         lastPerformance.circuit.country!,
@@ -53,11 +53,10 @@ class LastResult extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   Expanded(child: SizedBox(width: 0)),
                   Image.asset(
                     lastPerformance.circuit.outline!,
-                    width: Sizes.p148,
+                    width: Sizes.p96,
                   ),
                 ],
               ),
@@ -68,7 +67,6 @@ class LastResult extends StatelessWidget {
             children: [
               StyledText("Temps au tour", color: AppColors.textMuted),
               Expanded(child: gapW4),
-
               StyledCard(
                 color: AppColors.cardBorder,
                 borderColor: AppColors.tabBarBorder,

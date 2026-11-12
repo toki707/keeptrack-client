@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:keeptrack/src/constants/app_sizes.dart';
 import 'package:keeptrack/theme/theme.dart';
 
-
 class StyledDropdown extends StatelessWidget {
   const StyledDropdown({
     super.key,
@@ -22,7 +21,7 @@ class StyledDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownMenu<String>(
-      width: Sizes.p500,
+      width: Sizes.p232,
       enabled: enabled,
       initialSelection: initialSelection,
       requestFocusOnTap: true,

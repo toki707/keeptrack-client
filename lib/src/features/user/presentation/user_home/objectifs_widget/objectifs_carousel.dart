@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:keeptrack/src/constants/app_sizes.dart';
 import 'package:keeptrack/src/features/user/domain/objectif.dart';
@@ -32,7 +31,7 @@ class _ObjectifsCarouselState extends State<ObjectifsCarousel> {
     return Column(
       children: [
         SizedBox(
-          height: Sizes.p180,
+          height: Sizes.p148,
           child: PageView.builder(
             controller: controller,
             itemCount: widget.objectifs.length,
@@ -53,7 +52,6 @@ class _ObjectifsCarouselState extends State<ObjectifsCarousel> {
           ),
         ),
         gapH12,
-
         Row(
           mainAxisAlignment: .center,
           children: [

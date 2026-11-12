@@ -27,7 +27,7 @@ class _ListCircuitsScreenState extends ConsumerState<ListCircuitsScreen> {
         error: (error, stackTrace) => Center(
           child: StyledText(
             'Erreur de chargement des circuits',
-            fontSize: Sizes.p20,
+            fontSize: Sizes.p16,
           ),
         ),
         data: (circuits) {
@@ -44,18 +44,18 @@ class _ListCircuitsScreenState extends ConsumerState<ListCircuitsScreen> {
           return Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(Sizes.p16),
+                padding: const EdgeInsets.all(Sizes.p8),
                 child: SearchBar(
                   hintText: "Rechercher...",
                   hintStyle: WidgetStatePropertyAll(
-                    TextStyle(color: AppColors.searchHint, fontSize: Sizes.p20),
+                    TextStyle(color: AppColors.searchHint, fontSize: Sizes.p12),
                   ),
                   leading: Icon(Icons.search, color: AppColors.searchHint),
                   backgroundColor: WidgetStatePropertyAll(
                     AppColors.searchBackground,
                   ),
                   textStyle: WidgetStatePropertyAll(
-                    TextStyle(color: AppColors.textColor, fontSize: Sizes.p20),
+                    TextStyle(color: AppColors.textColor, fontSize: Sizes.p12),
                   ),
                   shadowColor: WidgetStatePropertyAll(Colors.transparent),
                   side: WidgetStatePropertyAll(

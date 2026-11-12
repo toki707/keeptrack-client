@@ -24,7 +24,7 @@ class AddButton extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(Sizes.p12),
-          child: StyledText("Ajouter", fontSize: Sizes.p20),
+          child: StyledText("Ajouter", fontSize: Sizes.p16),
         ),
       ),
     );

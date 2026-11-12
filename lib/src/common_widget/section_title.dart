@@ -17,7 +17,7 @@ class SectionTitle extends StatelessWidget {
       children: [
         Row(
           children: [
-            Expanded(child: StyledText(title, fontSize: Sizes.p20)),
+            Expanded(child: StyledText(title, fontSize: Sizes.p16)),
             
             ?trailing,
           ],

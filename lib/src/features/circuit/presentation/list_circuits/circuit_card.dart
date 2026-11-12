@@ -12,7 +12,6 @@ class CircuitCard extends StatelessWidget {
   final Circuit circuit;
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
     return GestureDetector(
       onTap: () =>
           context.goNamed("circuitDetail", pathParameters: {'id': circuit.id!}),
@@ -27,11 +26,11 @@ class CircuitCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: .center,
           children: [
-            Image.asset(circuit.outline!, width: size.width * 0.35),
+            Image.asset(circuit.outline!, height: Sizes.p48),
             Expanded(child: SizedBox(height: 0)),
             Container(
               padding: EdgeInsets.symmetric(
-                vertical: Sizes.p8,
+                vertical: Sizes.p4,
                 horizontal: Sizes.p8,
               ),
               decoration: BoxDecoration(
@@ -48,12 +47,12 @@ class CircuitCard extends StatelessWidget {
                   Expanded(
                     child: StyledText(
                       circuit.name!,
-                      fontSize: Sizes.p20,
+                      fontSize: Sizes.p12,
                       maxLines: 1,
                     ),
                   ),
-                  gapW8,
-                  FlagAvatar(circuit.location, radius: Sizes.p12),
+                  gapW4,
+                  FlagAvatar(circuit.location, radius: Sizes.p8),
                 ],
               ),
             ),

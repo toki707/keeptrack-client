@@ -8,6 +8,6 @@ class TabItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Tab(child: StyledText(title, fontSize: Sizes.p20));
+    return Tab(child: StyledText(title, fontSize: Sizes.p12));
   }
 }

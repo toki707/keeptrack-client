@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-/// Toutes les dimensions de l'application sont des multiples de 4 (ICH-294).
 class Sizes {
+  static const p2 = 2.0;
   static const p4 = 4.0;
   static const p8 = 8.0;
+  static const p10 = 10.0;
   static const p12 = 12.0;
   static const p16 = 16.0;
   static const p20 = 20.0;
@@ -26,8 +27,10 @@ class Sizes {
   static const p900 = 900.0;
 }
 
+const gapW2 = SizedBox(width: Sizes.p2);
 const gapW4 = SizedBox(width: Sizes.p4);
 const gapW8 = SizedBox(width: Sizes.p8);
+const gapW10 = SizedBox(width: Sizes.p10);
 const gapW12 = SizedBox(width: Sizes.p12);
 const gapW16 = SizedBox(width: Sizes.p16);
 const gapW20 = SizedBox(width: Sizes.p20);
@@ -37,8 +40,10 @@ const gapW32 = SizedBox(width: Sizes.p32);
 const gapW48 = SizedBox(width: Sizes.p48);
 const gapW64 = SizedBox(width: Sizes.p64);
 
+const gapH2 = SizedBox(height: Sizes.p2);
 const gapH4 = SizedBox(height: Sizes.p4);
 const gapH8 = SizedBox(height: Sizes.p8);
+const gapH10 = SizedBox(height: Sizes.p10);
 const gapH12 = SizedBox(height: Sizes.p12);
 const gapH16 = SizedBox(height: Sizes.p16);
 const gapH20 = SizedBox(height: Sizes.p20);

@@ -38,7 +38,7 @@ class ObjectifCard extends StatelessWidget {
 
     if (voiturePerformance == null) {
       return StyledCard(
-        padding: EdgeInsets.all(Sizes.p16),
+        padding: EdgeInsets.all(Sizes.p12),
         color: AppColors.objectifCardColor,
         borderColor: AppColors.objectifCardBorder,
         child: StyledText(
@@ -60,7 +60,7 @@ class ObjectifCard extends StatelessWidget {
     final objectifAtteint = ecartMs <= 0;
 
     return StyledCard(
-      padding: EdgeInsets.all(Sizes.p16),
+      padding: EdgeInsets.all(Sizes.p12),
       color: AppColors.cardColor,
       borderColor: AppColors.cardBorder,
       child: Column(
@@ -71,9 +71,9 @@ class ObjectifCard extends StatelessWidget {
               Icon(
                 Icons.timer_outlined,
                 color: AppColors.primaryAccent,
-                size: Sizes.p20,
+                size: Sizes.p16,
               ),
-              gapW12,
+              gapW8,
               StyledText(
                 "Chrono a atteindre",
                 fontSize: Sizes.p12,
@@ -81,15 +81,14 @@ class ObjectifCard extends StatelessWidget {
               ),
             ],
           ),
-          gapH12,
+          gapH8,
           StyledText(
             "Passer sous ${objectif.tempsCible} a ${objectif.circuit.name}",
             maxLines: 2,
           ),
-          gapH12,
-
+          gapH8,
           Container(
-            height: Sizes.p12,
+            height: Sizes.p8,
             decoration: BoxDecoration(
               color: AppColors.progressBackground,
               borderRadius: BorderRadius.circular(Sizes.p8),
@@ -107,15 +106,14 @@ class ObjectifCard extends StatelessWidget {
               ),
             ),
           ),
-          gapH12,
-
+          gapH8,
           Row(
             mainAxisAlignment: .spaceBetween,
             children: [
               Expanded(
                 child: StyledText(
                   "Record $meilleurTemps",
-                  fontSize: Sizes.p12,
+                  fontSize: Sizes.p10,
                   color: AppColors.textMuted,
                   maxLines: 1,
                 ),
@@ -124,7 +122,7 @@ class ObjectifCard extends StatelessWidget {
                 objectifAtteint
                     ? "Objectif atteint !"
                     : "encore ${(ecartMs / 1000).toStringAsFixed(3)} s",
-                fontSize: Sizes.p12,
+                fontSize: Sizes.p10,
                 color: AppColors.primaryAccent,
               ),
             ],
