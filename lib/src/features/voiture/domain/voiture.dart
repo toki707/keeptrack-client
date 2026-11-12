@@ -9,6 +9,8 @@ class Voiture {
   final String? classCar;
   final Specs? specs;
   final String? preview;
+  final String? overview;
+  final bool? isFav;
 
   Voiture({
     this.id,
@@ -19,6 +21,8 @@ class Voiture {
     this.classCar,
     this.specs,
     required this.preview,
+    this.overview,
+    this.isFav,
   });
 
   factory Voiture.fromJson(Map<String, dynamic> json) {
@@ -68,6 +72,20 @@ class Voiture {
       );
     }
 
+    final overview = json['overview'];
+    if (overview != null && overview is! String?) {
+      throw FormatException(
+        "Le Json est invalide : overview doit être de type String dans $json",
+      );
+    }
+
+    final isFav = json['isFav'];
+    if (isFav != null && isFav is! bool?) {
+      throw FormatException(
+        "Le Json est invalide : isFav doit être de type bool dans $json",
+      );
+    }
+
     return Voiture(
       id: id as String?,
       name: name as String?,
@@ -77,6 +95,8 @@ class Voiture {
       classCar: classCar as String?,
       specs: specs != null ? Specs.fromJson(specs) : null,
       preview: preview as String?,
+      overview: overview as String?,
+      isFav: isFav as bool?,
     );
   }
 }
