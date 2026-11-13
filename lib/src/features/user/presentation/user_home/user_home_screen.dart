@@ -75,7 +75,10 @@ class UserHomeScreen extends ConsumerWidget {
                     loading: () =>
                         const Center(child: CircularProgressIndicator()),
                     error: (error, stackTrace) =>
-                        Center(child: Center(child: Text(error.toString()))),
+                        Center(child: Padding(
+                          padding: const EdgeInsets.all(Sizes.p16),
+                          child: Text('Erreur: $error', textAlign: TextAlign.center),
+                        )),
                     data: (users) {
                       if (users.isEmpty) {
                         return const Center(

@@ -13,7 +13,7 @@ class NodejsUsersRepository {
   Future<List<User>> fetchUsersList() async {
     try {
       final parsedUrl = Uri.parse('$url/api/users');
-      final response = await http.get(parsedUrl);
+      final response = await http.get(parsedUrl).timeout(const Duration(seconds: 10));
       final statusCode = response.statusCode;
       if (statusCode != 200) {
         final message = 'Erreur survenue';

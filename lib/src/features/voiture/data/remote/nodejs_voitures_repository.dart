@@ -13,7 +13,7 @@ class NodejsVoituresRepository {
   Future<List<Voiture>> fetchVoituresList() async {
     try {
       final parsedUrl = Uri.parse('$url/api/voitures');
-      final response = await http.get(parsedUrl);
+      final response = await http.get(parsedUrl).timeout(const Duration(seconds: 10));
       final statusCode = response.statusCode;
       if (statusCode != 200) {
         final message = 'Erreur survenue';

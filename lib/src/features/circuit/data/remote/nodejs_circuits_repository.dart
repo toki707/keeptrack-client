@@ -13,7 +13,7 @@ class NodejsCircuitsRepository {
   Future<List<Circuit>> fetchCircuitsList() async {
     try {
       final parsedUrl = Uri.parse('$url/api/circuits');
-      final response = await http.get(parsedUrl);
+      final response = await http.get(parsedUrl).timeout(const Duration(seconds: 10));
       final statusCode = response.statusCode;
       if (statusCode != 200) {
         final message = 'Erreur survenue';
