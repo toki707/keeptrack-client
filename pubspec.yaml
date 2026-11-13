@@ -73,6 +73,7 @@ flutter:
     - assets/images/tracks/outlines/
     - assets/images/tracks/previews/
     - assets/images/cars/previews/
+    - assets/images/cars/overviews/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

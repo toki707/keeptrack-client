@@ -7,6 +7,12 @@ import 'package:keeptrack/src/features/user/presentation/profile/hours_played_ca
 import 'package:keeptrack/src/features/user/presentation/profile/success_card.dart';
 import 'package:keeptrack/theme/theme.dart';
 
+import '../../../../common_widget/styled_card.dart';
+import '../../../circuit/data/remote/nodejs_circuits_repository.dart';
+import '../../../voiture/data/remote/nodejs_voitures_repository.dart';
+import 'favorite_car_card.dart';
+import 'favorite_circuit_card.dart';
+
 class ProfileScreen extends ConsumerWidget {
   const new(this.user, {super.key});
 
@@ -14,6 +20,8 @@ class ProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final voituresListValue = ref.watch(voituresListFutureProvider);
+    final circuitsListValue = ref.watch(circuitsListFutureProvider);
     return ListView(
       padding: EdgeInsets.zero,
       children: [
@@ -35,14 +43,20 @@ class ProfileScreen extends ConsumerWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: Sizes.p20, top: Sizes.p96),
+                  padding: const EdgeInsets.only(
+                    left: Sizes.p20,
+                    top: Sizes.p96,
+                  ),
                   child: CircleAvatar(
                     backgroundColor: const Color.fromARGB(255, 53, 0, 0),
                     radius: Sizes.p48,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: Sizes.p24, top: Sizes.p100),
+                  padding: const EdgeInsets.only(
+                    left: Sizes.p24,
+                    top: Sizes.p100,
+                  ),
                   child: CircleAvatar(
                     backgroundImage: AssetImage(user.pfp!),
                     radius: 44,
@@ -60,7 +74,7 @@ class ProfileScreen extends ConsumerWidget {
                   child: CircleAvatar(
                     backgroundColor: const Color.fromARGB(255, 53, 0, 0),
                     radius: 18,
-                    child: Center(child: StyledText("12", fontSize: Sizes.p16 )),
+                    child: Center(child: StyledText("12", fontSize: Sizes.p16)),
                   ),
                 ),
               ],
@@ -91,7 +105,36 @@ class ProfileScreen extends ConsumerWidget {
                 SuccessCard(),
               ],
             ),
-            gapH16,
+            gapH12,
+            Column(
+              children: [
+                voituresListValue.when(
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  error: (error, stackTrace) =>
+                      Center(child: Text(error.toString())),
+                  data: (voitures) {
+                    final voiturePref = ref
+                        .read(nodejsVoituresRepositoryProvider)
+                        .fetchVoiturePref();
+                    return FavoriteCarCard(voiture: voiturePref, user: user);
+                  },
+                ),
+                gapH12,
+                circuitsListValue.when(
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  error: (error, stackTrace) =>
+                      Center(child: Text(error.toString())),
+                  data: (circuits) {
+                    final circuitPref = ref
+                        .read(nodejsCircuitsRepositoryProvider)
+                        .fetchCircuitPref();
+                    return FavoriteCircuitCard(circuit: circuitPref);
+                  },
+                ),
+              ],
+            ),
           ],
         ),
       ],

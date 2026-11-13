@@ -15,6 +15,7 @@ class Circuit {
   final String? preview;
   final String? outline;
   final String? location;
+  final bool? isFav;
 
   Circuit({
     this.id,
@@ -33,6 +34,7 @@ class Circuit {
     this.preview,
     this.outline,
     this.location,
+    this.isFav,
   });
 
   factory Circuit.fromJson(Map<String, dynamic> json) {
@@ -138,6 +140,13 @@ class Circuit {
       );
     }
 
+    final isFav = json['isFav'];
+    if (isFav != null && isFav is! bool?) {
+      throw FormatException(
+        "Le Json est invalide : isFav doit être de type bool dans $json",
+      );
+    }
+
     return Circuit(
       id: id as String?,
       name: name as String?,
@@ -155,6 +164,7 @@ class Circuit {
       preview: preview as String?,
       outline: outline as String?,
       location: location as String?,
+      isFav: isFav as bool?,
     );
   }
 }

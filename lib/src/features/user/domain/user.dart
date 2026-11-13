@@ -1,5 +1,6 @@
 import 'package:keeptrack/src/features/user/domain/performance.dart';
 
+import '../../voiture/domain/voiture.dart';
 import 'objectif.dart';
 
 class User {
@@ -105,16 +106,30 @@ class User {
   }
 
   double get nbreHeursJouees {
-  int totalMs = 0;
+    int totalMs = 0;
 
-  for (final performance in performances) {
-    for (final voiturePerf in performance.voitures) {
-      for (final tour in voiturePerf.temps) {
-        totalMs += voiturePerf.tempsEnMs(tour);
+    for (final performance in performances) {
+      for (final voiturePerf in performance.voitures) {
+        for (final tour in voiturePerf.temps) {
+          totalMs += voiturePerf.tempsEnMs(tour);
+        }
       }
     }
+
+    return totalMs / 3600000;
   }
 
-  return totalMs / 3600000;
-}
+  int nbreToursVoiture(Voiture voiturePref) {
+    int totalTours = 0;
+
+    for (final performance in performances) {
+      for (final voiturePerf in performance.voitures) {
+        if (voiturePerf.voiture.name == voiturePref.name) {
+          totalTours += voiturePerf.temps.length;
+        }
+      }
+    }
+
+    return totalTours;
+  }
 }
