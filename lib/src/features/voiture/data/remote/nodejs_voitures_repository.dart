@@ -7,7 +7,7 @@ import 'package:keeptrack/src/features/voiture/domain/voiture.dart';
 import 'package:http/http.dart' as http;
 
 class NodejsVoituresRepository {
-  static const url = 'http://192.168.8.39:3000';
+  static const url = 'http://127.0.0.1:3000';
   final voitures = <Voiture>[];
 
   Future<List<Voiture>> fetchVoituresList() async {
@@ -34,8 +34,12 @@ class NodejsVoituresRepository {
     return voitures.firstWhere((voiture) => voiture.id == voitureId);
   }
 
-  Voiture fetchVoiturePref() {
-    return voitures.firstWhere((voiture) => voiture.isFav == true);
+  Voiture? fetchVoiturePref() {
+    if (voitures.isEmpty) return null;
+    return voitures.firstWhere(
+      (voiture) => voiture.isFav == true,
+      orElse: () => voitures.first,
+    );
   }
 }
 

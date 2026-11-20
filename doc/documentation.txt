@@ -903,3 +903,206 @@ GRAPHIQUE DES TEMPS AU TOUR (EN DUR)
 	prochain sprint il faudra remettre un paramètre VoiturePerformance dans le widget et créer les
 	points avec une boucle sur voiturePerformance.temps, calculer la moyenne avec moyenneEnMs et le
 	meilleur tour avec indexMeilleurTemps. Le reste du widget (couleurs, zones, axes) ne changera pas.
+
+
+
+19.11.2026
+
+PAGE PROFIL : HEURES JOUEES, FAVORIS ET SUCCES
+
+	La page profil affichait seulement la bannière, la photo et le nom du user. Je voulais ajouter
+	des infos qui résument un peu son activité sur l'appli, donc j'ai ajouté 4 cartes : le nombre
+	d'heures jouées, les succès, la voiture favorite et le circuit favori. Tous ces widgets sont
+	rangés dans le dossier user/presentation/profile pour pas surcharger profile_screen.dart, comme
+	vu dans le 294 avec le découpage en petits widgets.
+
+	a) Le nombre d'heures jouées
+
+	Au début je pensais stocker les heures dans le JSON du user, mais ça voulait dire qu'il fallait
+	le mettre à jour à chaque fois qu'on ajoute un temps. Alors que en fait j'ai déjà toutes les
+	infos : si j'additionne tous les temps au tour du user, j'obtiens le temps total passé à rouler.
+	J'ai donc fait un getter nbreHeursJouees dans la classe User :
+
+		double get nbreHeursJouees {
+		  int totalMs = 0;
+
+		  for (final performance in performances) {                               //1
+		    for (final voiturePerf in performance.voitures) {
+		      for (final tour in voiturePerf.temps) {
+		        totalMs += voiturePerf.tempsEnMs(tour);                           //2
+		      }
+		    }
+		  }
+
+		  return totalMs / 3600000;                                               //3
+		}
+
+	1) Il y a 3 boucles for parce que les temps sont rangés sur 3 niveaux : un user a plusieurs
+	performances (une par circuit), chaque performance a plusieurs voitures, et chaque voiture a
+	plusieurs temps.
+
+	2) J'ai encore réutilisé tempsEnMs() de VoiturePerformance pour transformer "1:41.234" en
+	millisecondes, comme ça on peut faire une addition normale.
+
+	3) Une heure c'est 60 min x 60 s x 1000 ms = 3 600 000 ms, donc en divisant le total par ce
+	nombre j'ai le résultat en heures. C'est un double et pas un int pour garder les heures pas
+	finies (par exemple 1.5 h).
+
+	J'ai mis un getter (get) au lieu d'une méthode normale parce que il n'y a pas besoin de
+	paramètre, on l'utilise comme une simple variable : user.nbreHeursJouees.
+
+	Pour l'affichage, le widget HoursPlayedCard reçoit le user et affiche une icône de chrono, le
+	texte "Heures jouées" et la valeur :
+
+		StyledText(
+		  "${user.nbreHeursJouees.toStringAsFixed(1)} h",
+		  fontSize: Sizes.p20,
+		),
+
+	Le toStringAsFixed(1) garde seulement un chiffre après la virgule, sinon ça afficherait un truc
+	du genre 0.4583333 h qui est illisible.
+
+	Réflexion : ce n'est pas exactement le temps passé dans le jeu, parce que les tours pas finis ou
+	le temps dans les menus ne sont pas comptés. Mais pour l'instant c'est la seule info que j'ai et
+	ça donne quand même une bonne idée.
+
+	b) Les favoris
+
+	Pour savoir quelle voiture et quel circuit sont les favoris, j'ai ajouté un champ isFav dans les
+	classes Voiture et Circuit. Ensuite dans les repositories NodeJS j'ai fait une méthode qui
+	cherche le premier élément qui a isFav à true :
+
+		Voiture? fetchVoiturePref() {
+		  if (voitures.isEmpty) return null;                                      //1
+		  return voitures.firstWhere(
+		    (voiture) => voiture.isFav == true,
+		    orElse: () => voitures.first,                                         //2
+		  );
+		}
+
+	1) Si la liste est vide (par exemple si le serveur n'a encore rien renvoyé), je renvoie null,
+	c'est pour ça qu'il y a un ? après Voiture.
+
+	2) Le orElse sert à dire quoi renvoyer si aucune voiture n'a isFav à true. Sans lui le
+	firstWhere() lance une erreur et l'appli plante. Là je prends juste la première voiture de la
+	liste pour qu'il y ait toujours quelque chose d'affiché.
+
+	J'ai fait exactement la même chose pour les circuits avec fetchCircuitPref(). Comme ces deux
+	méthodes cherchent dans la liste qui est gardée dans le repository, il n'y a pas besoin de
+	refaire une requête au serveur.
+
+	Dans profile_screen.dart j'utilise les FutureProvider des voitures et des circuits avec .when(),
+	comme pour la page home. Ça permet d'attendre que les listes soient chargées avant d'appeler
+	fetchVoiturePref(), sinon la liste serait encore vide :
+
+		data: (voitures) {
+		  final voiturePref = ref
+		      .read(nodejsVoituresRepositoryProvider)
+		      .fetchVoiturePref();
+		  if (voiturePref == null) return const SizedBox.shrink();
+		  return FavoriteCarCard(voiture: voiturePref, user: user);
+		},
+
+	Le SizedBox.shrink() c'est un widget vide qui prend aucune place, donc si il n'y a pas de
+	favori rien ne s'affiche au lieu d'avoir une erreur.
+
+	Sur la carte de la voiture favorite, j'affiche aussi le nombre de tours fait avec. Pour ça j'ai
+	ajouté une méthode nbreToursVoiture() dans User qui fonctionne un peu comme nbreHeursJouees,
+	mais au lieu d'additionner les temps, elle additionne les .length des listes de temps
+	seulement quand le nom de la voiture correspond :
+
+		if (voiturePerf.voiture.name == voiturePref.name) {
+		  totalTours += voiturePerf.temps.length;
+		}
+
+	Encore une fois je compare avec le name et pas l'id, pour la même raison que pour les
+	objectifs : les voitures rangées dans le user n'ont pas d'id.
+
+	Pour le look des cartes FavoriteCarCard et FavoriteCircuitCard, j'ai utilisé un Stack pour
+	mettre plusieurs widgets les uns sur les autres :
+		--> en dessous l'image de la voiture ou du circuit (Image.asset)
+		--> au milieu un Container avec un LinearGradient qui va de transparent à sombre, pour que
+		    le texte reste lisible par dessus l'image
+		--> au dessus le texte (marque, nom, nombre de tours)
+
+	Le ClipRRect autour sert à couper l'image avec les coins arrondis, sinon l'image dépasse des
+	bords de la carte. Pour que ça rende mieux, la carte de la voiture a l'image à gauche et le
+	texte à droite, et la carte du circuit c'est l'inverse (j'ai juste inversé begin et end dans
+	le dégradé).
+
+	c) Les succès
+
+	Pour les succès, le but c'est d'afficher combien de succès l'utilisateur a débloqué sur le
+	total, avec une barre de progression. J'ai fait le widget SuccessCard qui a le même style que
+	HoursPlayedCard (icône, titre, valeur) pour que les deux cartes soient pareilles côte à côte.
+	Elles sont mises dans un Row et chacune est dans un Expanded pour qu'elles prennent la même
+	largeur.
+
+	Pour la barre de progression, j'ai repris exactement la même technique que pour ObjectifCard :
+	un Container gris pour le fond et un FractionallySizedBox avec un dégradé rouge à l'intérieur.
+
+		child: FractionallySizedBox(
+		  widthFactor: 11 / 709,
+		  ...
+		),
+
+	Le widthFactor c'est simplement le nombre de succès débloqués divisé par le total, ce qui
+	donne un nombre entre 0 et 1.
+
+	Réflexion : pour l'instant les succès sont en dur (11/709) parce que je n'ai pas encore de
+	données sur les succès dans la base. Le but de ce sprint c'était de mettre le widget en place
+	visuellement. Pour la suite il faudra ajouter les succès dans le JSON du user et passer le user
+	en paramètre de SuccessCard, comme pour HoursPlayedCard, pour calculer le vrai nombre.
+
+
+
+PASSAGE DE VSCODE (WEB) A ANDROID STUDIO (ANDROID)
+
+	Jusqu'à maintenant je développais sur VSCode et je lançais l'appli dans Chrome avec Flutter Web.
+	C'était pratique pour aller vite, mais KeepTrack c'est une appli faite pour être utilisée sur un
+	téléphone, donc il fallait qu'elle tourne sur Android. Pour ça je suis passé sur Android Studio,
+	parce que c'est lui qui fournit le SDK Android et l'émulateur pour tester l'appli comme sur un
+	vrai téléphone.
+
+	a) Pourquoi ça ne marchait pas directement
+
+	Avec Flutter on écrit le code Dart une seule fois et il marche sur toutes les plateformes, donc
+	tout ce qui est widgets, providers et repositories n'a pas eu besoin de changer. Par contre,
+	chaque plateforme a ses propres réglages. Sur le Web c'est le navigateur qui gère les accès
+	réseau (d'où le problème de CORS que j'avais eu), alors que sur Android c'est le système qui
+	décide ce que l'appli a le droit de faire. Et de base, Android bloque deux choses dont mon
+	appli a besoin pour parler avec le serveur NodeJS.
+
+	b) La permission Internet
+
+	Sur Android, une appli doit dire à l'avance de quoi elle a besoin dans le fichier
+	android/app/src/main/AndroidManifest.xml. Sans permission, l'appli n'a pas le droit d'utiliser
+	le réseau du tout, donc le http.get() vers mon serveur échouait. J'ai donc ajouté cette ligne
+	juste avant la balise <application> :
+
+		<uses-permission android:name="android.permission.INTERNET"/>
+
+	c) Autoriser le http
+
+	Même avec la permission, ça ne marchait toujours pas. Depuis Android 9, les applis ont le droit
+	d'utiliser seulement du https (connexion sécurisée) et le http normal est bloqué. Le problème
+	c'est que mon serveur NodeJS tourne en local sur http://127.0.0.1:3000, sans certificat, donc
+	sans https. Pour régler ça j'ai ajouté un attribut dans la balise <application> du même
+	fichier :
+
+		<application
+		    ...
+		    android:usesCleartextTraffic="true">
+
+	"Cleartext" ça veut dire du texte en clair, donc non chiffré, ce qui est le cas du http.
+
+	Réflexion : autoriser le http c'est ok pour le développement parce que le serveur tourne sur
+	mon PC, mais ce n'est pas sécurisé. Si un jour l'appli est mise en ligne avec un vrai serveur,
+	il faudra passer en https et enlever cet attribut.
+
+	d) Ce qui ne sert plus
+
+	Le middleware CORS que j'avais ajouté dans index.js côté serveur était seulement là pour le
+	navigateur. Sur Android il n'y a pas de navigateur entre l'appli et le serveur, donc il n'est
+	plus utile pour Android. Je l'ai quand même laissé pour pouvoir encore tester sur le Web si
+	besoin.

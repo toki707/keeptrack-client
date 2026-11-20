@@ -13,6 +13,7 @@ class Circuit {
   final String? highestPoint;
   final String? lowestPoint;
   final String? preview;
+  final String? overview;
   final String? outline;
   final String? location;
   final bool? isFav;
@@ -32,6 +33,7 @@ class Circuit {
     this.highestPoint,
     this.lowestPoint,
     this.preview,
+    this.overview,
     this.outline,
     this.location,
     this.isFav,
@@ -126,6 +128,13 @@ class Circuit {
       );
     }
 
+    final overview = json['overview'];
+    if (overview != null && overview is! String?) {
+      throw FormatException(
+        "Le Json est invalide : overview doit être de type String dans $json",
+      );
+    }
+
     final outline = json['outline'];
     if (outline != null && outline is! String?) {
       throw FormatException(
@@ -162,6 +171,7 @@ class Circuit {
       highestPoint: highestPoint as String?,
       lowestPoint: lowestPoint as String?,
       preview: preview as String?,
+      overview: overview as String?,
       outline: outline as String?,
       location: location as String?,
       isFav: isFav as bool?,

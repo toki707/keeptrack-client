@@ -74,11 +74,26 @@ class UserHomeScreen extends ConsumerWidget {
                   child: usersListValue.when(
                     loading: () =>
                         const Center(child: CircularProgressIndicator()),
-                    error: (error, stackTrace) =>
-                        Center(child: Padding(
-                          padding: const EdgeInsets.all(Sizes.p16),
-                          child: Text('Erreur: $error', textAlign: TextAlign.center),
-                        )),
+                    error: (error, stackTrace) => Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(Sizes.p16),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Erreur: $error',
+                              textAlign: TextAlign.center,
+                            ),
+                            gapH12,
+                            ElevatedButton(
+                              onPressed: () =>
+                                  ref.invalidate(usersListFutureProvider),
+                              child: const Text('Réessayer'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     data: (users) {
                       if (users.isEmpty) {
                         return const Center(

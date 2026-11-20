@@ -25,11 +25,12 @@ class FavoriteCircuitCard extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Image.asset(
-              circuit.preview!,
-              fit: BoxFit.cover,
-              alignment: Alignment.centerRight,
-            ),
+            if ((circuit.overview ?? circuit.preview) != null)
+              Image.asset(
+                (circuit.overview ?? circuit.preview)!,
+                fit: BoxFit.cover,
+                alignment: Alignment.centerRight,
+              ),
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -56,20 +57,20 @@ class FavoriteCircuitCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         StyledText(
-                          circuit.description!,
+                          circuit.description ?? '',
                           fontSize: Sizes.p10,
                           color: AppColors.textMuted,
                           maxLines: 1,
                         ),
                         gapH4,
                         StyledText(
-                          circuit.name!,
+                          circuit.name ?? '',
                           fontSize: Sizes.p12,
                           maxLines: 1,
                         ),
                         gapH4,
                         StyledText(
-                          circuit.lengthKm!,
+                          circuit.lengthKm ?? '',
                           fontSize: Sizes.p10,
                           color: AppColors.textMuted,
                           maxLines: 1,
