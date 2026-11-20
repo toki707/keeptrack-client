@@ -7,13 +7,13 @@ import 'package:keeptrack/src/features/user/domain/user.dart';
 import 'package:http/http.dart' as http;
 
 class NodejsUsersRepository {
-  static const url = 'http://192.168.8.39:3000';
+  static const url = 'http://127.0.0.1:3000';
   final users = <User>[];
 
   Future<List<User>> fetchUsersList() async {
     try {
       final parsedUrl = Uri.parse('$url/api/users');
-      final response = await http.get(parsedUrl);
+      final response = await http.get(parsedUrl).timeout(const Duration(seconds: 10));
       final statusCode = response.statusCode;
       if (statusCode != 200) {
         final message = 'Erreur survenue';

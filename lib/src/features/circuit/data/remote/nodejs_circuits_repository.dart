@@ -7,13 +7,13 @@ import 'package:keeptrack/src/features/circuit/domain/circuit.dart';
 import 'package:http/http.dart' as http;
 
 class NodejsCircuitsRepository {
-  static const url = 'http://192.168.8.39:3000';
+  static const url = 'http://127.0.0.1:3000';
   final circuits = <Circuit>[];
 
   Future<List<Circuit>> fetchCircuitsList() async {
     try {
       final parsedUrl = Uri.parse('$url/api/circuits');
-      final response = await http.get(parsedUrl);
+      final response = await http.get(parsedUrl).timeout(const Duration(seconds: 10));
       final statusCode = response.statusCode;
       if (statusCode != 200) {
         final message = 'Erreur survenue';
@@ -38,8 +38,12 @@ class NodejsCircuitsRepository {
     return circuits.firstWhere((circuit) => circuit.name == circuitName);
   }
 
-  Circuit fetchCircuitPref() {
-    return circuits.firstWhere((circuit) => circuit.isFav == true);
+  Circuit? fetchCircuitPref() {
+    if (circuits.isEmpty) return null;
+    return circuits.firstWhere(
+      (circuit) => circuit.isFav == true,
+      orElse: () => circuits.first,
+    );
   }
 }
 

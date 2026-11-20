@@ -28,11 +28,12 @@ class FavoriteCarCard extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Image.asset(
-              voiture.overview!,
-              fit: BoxFit.cover,
-              alignment: Alignment.centerLeft,
-            ),
+            if ((voiture.overview ?? voiture.preview) != null)
+              Image.asset(
+                (voiture.overview ?? voiture.preview)!,
+                fit: BoxFit.cover,
+                alignment: Alignment.centerLeft,
+              ),
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -72,14 +73,14 @@ class FavoriteCarCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         StyledText(
-                          voiture.brand!,
+                          voiture.brand ?? '',
                           fontSize: Sizes.p10,
                           color: AppColors.textMuted,
                           maxLines: 1,
                         ),
                         gapH4,
                         StyledText(
-                          voiture.name!,
+                          voiture.name ?? '',
                           fontSize: Sizes.p12,
                           maxLines: 1,
                         ),

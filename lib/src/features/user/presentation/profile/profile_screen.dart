@@ -7,7 +7,6 @@ import 'package:keeptrack/src/features/user/presentation/profile/hours_played_ca
 import 'package:keeptrack/src/features/user/presentation/profile/success_card.dart';
 import 'package:keeptrack/theme/theme.dart';
 
-import '../../../../common_widget/styled_card.dart';
 import '../../../circuit/data/remote/nodejs_circuits_repository.dart';
 import '../../../voiture/data/remote/nodejs_voitures_repository.dart';
 import 'favorite_car_card.dart';
@@ -117,6 +116,7 @@ class ProfileScreen extends ConsumerWidget {
                     final voiturePref = ref
                         .read(nodejsVoituresRepositoryProvider)
                         .fetchVoiturePref();
+                    if (voiturePref == null) return const SizedBox.shrink();
                     return FavoriteCarCard(voiture: voiturePref, user: user);
                   },
                 ),
@@ -130,6 +130,7 @@ class ProfileScreen extends ConsumerWidget {
                     final circuitPref = ref
                         .read(nodejsCircuitsRepositoryProvider)
                         .fetchCircuitPref();
+                    if (circuitPref == null) return const SizedBox.shrink();
                     return FavoriteCircuitCard(circuit: circuitPref);
                   },
                 ),
